@@ -19,7 +19,7 @@ export class LeaveStatusComponent implements OnInit {
 
   constructor (private leaveService: LeaveService) {}
 
-  os: ReturnType<typeof liff.getOS>; 
+  os: ReturnType<typeof liff.getOS>;
   profile!: UnPromise<ReturnType<typeof liff.getProfile>>;
   dataLeave: any = [];
   dataDays: any = [];
@@ -30,7 +30,7 @@ export class LeaveStatusComponent implements OnInit {
   sort: any = [];
 
   ngOnInit(): void {
-    liff.init({liffId:'2000308881-Ljw6m3Vo'}).then(()=>{
+    liff.init({liffId:'1657746390-LeORq250'}).then(()=>{
       this.os=liff.getOS();
       if(liff.isLoggedIn()){
         liff.getProfile().then( async profile =>{
@@ -53,7 +53,7 @@ export class LeaveStatusComponent implements OnInit {
         // line_id: 'Uab6620e68248620f8c554228f90595b6'
         // line_id: 'U29b0687712ba81f325cdd94daf68fac4'
       }
-    
+
       this.leaveService.getInitLeaveData(param).subscribe({
         next: (res: any) => {
           // console.log(res.leaveType);
@@ -63,7 +63,7 @@ export class LeaveStatusComponent implements OnInit {
       })
     })
   }
-  
+
 
   requestLeaveStatus() {
     return new Promise<any>((resolve, reject) => {
@@ -74,7 +74,7 @@ export class LeaveStatusComponent implements OnInit {
         // line_id: "U29b0687712ba81f325cdd94daf68fac4",
         // status: "PENDING"
       }
-    
+
       this.leaveService.requestLeaveStatusFix(param).subscribe({
         next: (res: any) => {
           // console.log(this.leaveTypeName);
@@ -93,10 +93,10 @@ export class LeaveStatusComponent implements OnInit {
             const data = moment(res.leave[i].start_time).diff(res.leave[i].end_time, 'days');
             this.dataDays.push(data);
           }
-      
+
           // Filter 'PENDING' status before assigning to dataLeave
           this.dataLeave = res.leave.filter((leaveItem: any) => leaveItem.status === 'PENDING');
-      
+
           this.myName = res.user;
           // console.log(this.dataLeave);
           resolve(1);
@@ -146,7 +146,7 @@ export class LeaveStatusComponent implements OnInit {
         })
       }
     })
-    
+
   }
 
 }

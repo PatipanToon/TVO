@@ -16,7 +16,7 @@ export class EmployeeHistoryComponent implements OnInit {
     private router: Router,
     private leaveService: LeaveService) {}
 
-  os: ReturnType<typeof liff.getOS>;  
+  os: ReturnType<typeof liff.getOS>;
   profile!: UnPromise<ReturnType<typeof liff.getProfile>>;
 
   name = localStorage.getItem('employee_name');
@@ -25,7 +25,7 @@ export class EmployeeHistoryComponent implements OnInit {
   data: any
 
   ngOnInit(): void {
-    liff.init({liffId:'2000308881-Ljw6m3Vo'}).then(()=>{
+    liff.init({liffId:'1657746390-LeORq250'}).then(()=>{
       this.os=liff.getOS();
       if(liff.isLoggedIn()){
         liff.getProfile().then( profile =>{

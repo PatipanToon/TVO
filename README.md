@@ -31,3 +31,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 change 
 environment.ts
 and change LIFF ID BEFORE PRODUCTION EVERYTIME !!!
+
+PRODUCTION_LIFF_ID = 1657746390-LeORq250
+DEV_LIFF_ID = 2000308881-Ljw6m3Vo

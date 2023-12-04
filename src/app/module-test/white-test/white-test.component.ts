@@ -52,7 +52,7 @@ constructor(
 ) { }
 
 ngOnInit() {
-  liff.init({liffId:'2000308881-Ljw6m3Vo'}).then(()=>{
+  liff.init({liffId:'1657746390-LeORq250'}).then(()=>{
     this.os=liff.getOS();
     if(liff.isLoggedIn()){
       liff.getProfile().then( profile =>{
@@ -203,7 +203,7 @@ deleteFilefromInput() {
   this.fd = new FormData();
 }
 sendLeave() {
-  
+
   if(!this.leaveType || !this.startDate || !this.endDate) {
     Swal.fire({
       position: 'center',
@@ -233,7 +233,7 @@ sendLeave() {
           end: this.endDate,
           file: this.yourFile
         }
-      
+
         setTimeout(() => {
           this.leaveService.addLeave(param).subscribe({
             next: () => {
@@ -275,7 +275,7 @@ sendLeave() {
       end: this.endDate,
       // file: 'ไม่ได้แนบไฟล์'
     }
-  
+
     this.leaveService.addLeave(param).subscribe({
       next: (res: any) => {
         Swal.fire({

@@ -52,7 +52,7 @@ export class WriteLeaveComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    liff.init({ liffId: '2000308881-Ljw6m3Vo' }).then(() => {
+    liff.init({ liffId: '1657746390-LeORq250' }).then(() => {
       this.os = liff.getOS();
       if (liff.isLoggedIn()) {
         liff.getProfile().then(profile => {
@@ -109,7 +109,7 @@ export class WriteLeaveComponent implements OnInit {
     }
     let date
     date = this.dataLeaveQuota?.matchQuota - this.dataLeaveQuota?.matchUse
-    this.dateQuota = date % 1 == 0 ? date + '/' + this.dataLeaveQuota.matchQuota + ' วัน' : Math.floor(date) + '.5' + '/' + this.dataLeaveQuota.matchQuota + ' วัน' + ' | รออนุมัติ : ' + this.dataLeaveQuota.matchPending + ' วัน'
+    this.dateQuota = date % 1 == 0 ? date + '/' + this.dataLeaveQuota.matchQuota + ' วัน' + ' | รออนุมัติ : ' + this.dataLeaveQuota.matchPending + ' วัน' : Math.floor(date) + '.5' + '/' + this.dataLeaveQuota.matchQuota + ' วัน' + ' | รออนุมัติ : ' + this.dataLeaveQuota.matchPending + ' วัน'
     //todo
   }
 

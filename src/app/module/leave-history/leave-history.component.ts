@@ -19,7 +19,7 @@ export class LeaveHistoryComponent implements OnInit {
 
   constructor (private leaveService: LeaveService) {}
 
-  os: ReturnType<typeof liff.getOS>; 
+  os: ReturnType<typeof liff.getOS>;
   profile!: UnPromise<ReturnType<typeof liff.getProfile>>;
   dataLeave: any = [];
   dataDays: any = [];
@@ -30,7 +30,7 @@ export class LeaveHistoryComponent implements OnInit {
   sort: any = [];
 
   ngOnInit(): void {
-    liff.init({liffId:'2000308881-Ljw6m3Vo'}).then(()=>{
+    liff.init({liffId:'1657746390-LeORq250'}).then(()=>{
       this.os=liff.getOS();
       if(liff.isLoggedIn()){
         liff.getProfile().then( async profile =>{
@@ -54,7 +54,7 @@ export class LeaveHistoryComponent implements OnInit {
         // line_id: 'U29b0687712ba81f325cdd94daf68fac4'
         // line_id: 'Uc748e20222c83fdad81366bde68ba8f2' // ลูกค้า
       }
-    
+
       this.leaveService.getInitLeaveData(param).subscribe({
         next: (res: any) => {
           // console.log(res.leaveType);
@@ -65,7 +65,7 @@ export class LeaveHistoryComponent implements OnInit {
       })
     })
   }
-  
+
 
   requestLeaveStatus() {
     return new Promise<any>((resolve, reject) => {
@@ -77,7 +77,7 @@ export class LeaveHistoryComponent implements OnInit {
         // line_id: 'Uc748e20222c83fdad81366bde68ba8f2' //ลูกค้า
         // status: "PENDING"
       }
-    
+
       this.leaveService.requestLeaveStatus(param).subscribe({
         next: (res: any) => {
           // console.log(this.leaveTypeName);
@@ -85,7 +85,7 @@ export class LeaveHistoryComponent implements OnInit {
             res.leave[i].start_time = moment(res.leave[i].start_time).format("DD/MM/YYYY");
             res.leave[i].end_time = moment(res.leave[i].end_time).format("DD/MM/YYYY");
             res.leave[i].leave_type_name = getObject(this.leaveTypeName, res.leave[i].type_id, 'id');
-            res.leave[i].leave_type_name = res.leave[i].leave_type_name ? res.leave[i].leave_type_name.name : null; 
+            res.leave[i].leave_type_name = res.leave[i].leave_type_name ? res.leave[i].leave_type_name.name : null;
             if(res.leave[i].leave_format === 'FULL') {
               res.leave[i].leave_format = 'เต็มวัน';
             }else if(res.leave[i].leave_format === 'HALF_MORNING') {
@@ -96,7 +96,7 @@ export class LeaveHistoryComponent implements OnInit {
             const data = moment(res.leave[i].start_time).diff(res.leave[i].end_time,'days');
               this.dataDays.push(data);
           }
-  
+
           this.dataLeave = res.leave.filter((leaveItem: any) => leaveItem.status !== 'PENDING');
           this.myName = res.user;
           console.log(res);
@@ -148,7 +148,7 @@ export class LeaveHistoryComponent implements OnInit {
         })
       }
     })
-    
+
   }
 
 }
