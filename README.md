@@ -25,3 +25,12 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+!! IMPORTANT !!
+## Edit ENV FIRST 
+change 
+environment.ts
+and change LIFF ID BEFORE PRODUCTION EVERYTIME !!!
+
+PRODUCTION_LIFF_ID = 1657746390-LeORq250
+DEV_LIFF_ID = 2000308881-Ljw6m3Vo
