@@ -1,0 +1,62 @@
+<div class="container-fluid">
+  <div class="row py-4">
+    <div class="col-12 text-center">
+      <img class="img-fluid" src="assets/logo-customer.png">
+    </div>
+    <div class="col-12 pt-3">
+      <h3 class="text-theme text-center">เมนูการขอลาทั้งหมด</h3>
+    </div>
+  </div>
+  <div class="row text-center">
+    <div class="col-12">
+      <img class="img-fluid" style="width: 30%;" src="{{pictureUser ? pictureUser : 'assets/user.png'}}">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 pt-3">
+      <p class="text-theme text-center">ยินดีต้อนรับ {{employeeData ? employeeData?.name_th : ''}}</p>
+    </div>
+    <div class="col-12 pt-3">
+      <a [routerLink]="['/write-leave']" class="pt-3">
+        <button class="btn btn-theme btn-block min-h-50"><i class="fa fa-plus" aria-hidden="true"></i>
+          สร้างคำร้องขอลา</button>
+      </a>
+    </div>
+    <div class="col-12 pt-3">
+      <a [routerLink]="['/leave-status']" class="pt-3">
+        <button class="btn btn-warning btn-block min-h-50"><i class="fa fa-eye" aria-hidden="true"></i>
+          ดูสถานะคำร้องขอลาที่ยังไม่ได้อนุมัติของคุณ</button>
+      </a>
+    </div>
+    <div class="col-12 pt-3">
+      <a [routerLink]="['/leave-history']" class="pt-3">
+        <button class="btn btn-success btn-block min-h-50"><i class="fa fa-eye" aria-hidden="true"></i>
+          ดูประวัติการลาของคุณ</button>
+      </a>
+    </div>
+    <div class="col-12">
+      <hr>
+      <a [routerLink]="['/approve-status']" class="pt-3">
+        <button class="btn btn-info btn-block min-h-50"><i class="fa fa-eye" aria-hidden="true"></i>
+          ดูคำร้องขอลาผู้ใต้บังคับบัญชา</button>
+      </a>
+    </div>
+  </div>
+  <div class="row pt-3">
+    <div class="col-12">
+      <a [routerLink]="['/employee-history-summary']" class="pt-3">
+        <button class="btn btn-info btn-block min-h-50"><i class="fa fa-search" aria-hidden="true"></i>
+          ค้นหาประวัติการลาของพนักงาน</button>
+      </a>
+    </div>
+  </div>
+  <div class="row pt-3">
+    <div class="col-12">
+      <button class="btn btn-danger btn-block min-h-50" (click)="clearCache()"><i class="fa fa-trash"
+          aria-hidden="true"></i>
+        ล้างค่าแคช</button>
+    </div>
+    <hr>
+  </div>
+  <hr>
+</div>
