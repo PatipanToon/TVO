@@ -70,7 +70,7 @@
   <div class="row mt-2">
     <div class="col-12">
       <button class="btn-upload" (click)="fileUpload.click()">เอกสารแนบ</button>
-      <input type="file" (change)="getFile($event)" accept=".pdf, .png" #fileUpload hidden /> <br />
+      <input type="file" (change)="getFile($event)" accept=".pdf, .png, .jpg, .jpeg" #fileUpload hidden /> <br />
       <label>{{ filePreview ? filePreview : 'รับรองไฟล์ PDF หรือ PNG ขนาดไฟล์ต้องไม่เกิน 5 mb'}}</label>
     </div>
   </div>

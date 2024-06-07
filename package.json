@@ -6,8 +6,8 @@
     "start": "ng serve",
     "build": "ng build --base-href /VegetableOil/leave/",
     "watch": "ng build --watch --configuration development",
-    "build:upload:dev": "ng build --base-href /VegetableOil/leave/ && scp -r dist/tvo-angular/* root@ndev1.newdice.co:/project/chatbot/VegetableOil/views/tvo-angular",
-    "build:upload:prod": "ng build --base-href /VegetableOil/leave/ && scp -r dist/tvo-angular/* root@chatbot.newdice.co:/project/chatbot/VegetableOil/views/tvo-angular",
+    "build-deploy:dev": "ng build --base-href /VegetableOil/leave/ && scp -r dist/tvo-angular/* root@ndev1.newdice.co:/project/chatbot/VegetableOil/views/tvo-angular",
+    "build-deploy:prod": "ng build --base-href /VegetableOil/leave/ && scp -r dist/tvo-angular/* root@chatbot.newdice.co:/project/chatbot/VegetableOil/views/tvo-angular",
     "test": "ng test"
   },
   "private": true,

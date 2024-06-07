@@ -6,17 +6,16 @@ import { getObject } from 'src/app/model/liff.model';
 import { LeaveService } from 'src/app/service/leave.service';
 import { LiffService } from 'src/app/service/liff.service';
 import { environment } from 'src/environments/environment';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 type UnPromise<T> = T extends Promise<infer X> ? X : T;
 
 @Component({
   selector: 'app-approve-status',
   templateUrl: './approve-status.component.html',
-  styleUrls: ['./approve-status.component.scss']
+  styleUrls: ['./approve-status.component.scss'],
 })
 export class ApproveStatusComponent implements OnInit {
-
   leaveTypeName: any;
   dataLeave: any;
   dataUser: any;
@@ -33,6 +32,8 @@ export class ApproveStatusComponent implements OnInit {
   profile!: UnPromise<ReturnType<typeof liff.getProfile>>;
 
   note!: string;
+
+  appUrl: string = '';
   constructor(
     private titleService: Title,
     private liffService: LiffService,
@@ -46,6 +47,7 @@ export class ApproveStatusComponent implements OnInit {
       this.profile = this.liffService.getProfile();
       await this.getInitLeaveData();
       await this.requestLeaveStatus();
+      this.appUrl = environment.path;
     } catch (error) {
       console.error(error);
     }
@@ -59,22 +61,22 @@ export class ApproveStatusComponent implements OnInit {
   getInitLeaveData() {
     return new Promise<any>((resolve, reject) => {
       const param = {
-        line_id: this.profile?.userId
-      }
+        line_id: this.profile?.userId,
+      };
 
       this.leaveService.getInitLeaveData(param).subscribe({
         next: (res: any) => {
           this.leaveTypeName = res.leaveType;
-          resolve(1)
-        }
-      })
-    })
+          resolve(1);
+        },
+      });
+    });
   }
 
   requestLeaveStatus() {
     const param = {
       line_id: this.profile?.userId,
-    }
+    };
 
     this.leaveService.requestLeaveStatusFix(param).subscribe({
       next: (res: any) => {
@@ -89,16 +91,25 @@ export class ApproveStatusComponent implements OnInit {
           const leave = res.approve[i].leave;
           leave.start_time = moment(leave.start_time).format('DD/MM/YYYY');
           leave.end_time = moment(leave.end_time).format('DD/MM/YYYY');
-          leave.leave_type_name = getObject(this.leaveTypeName, leave.type_id, 'id');
-          leave.leave_type_name = leave.leave_type_name ? leave.leave_type_name.name : null;
+          leave.leave_type_name = getObject(
+            this.leaveTypeName,
+            leave.type_id,
+            'id'
+          );
+          leave.leave_type_name = leave.leave_type_name
+            ? leave.leave_type_name.name
+            : null;
 
           const leaveApprovals = leave.leave_approvals;
           for (let j = 0; j < leaveApprovals.length; j++) {
-            const approval  = leaveApprovals[j];
+            const approval = leaveApprovals[j];
             if (approval.result === 'PENDING') {
               maxPriority = approval.approver_priority;
             }
-            if (approval.result === 'PENDING' && approval.approver_id === res.user.id) {
+            if (
+              approval.result === 'PENDING' &&
+              approval.approver_id === res.user.id
+            ) {
               thisUserPriority = approval.approver_priority;
             }
 
@@ -123,29 +134,28 @@ export class ApproveStatusComponent implements OnInit {
             leaveFilterForThisUser.push(res.approve[i]);
           }
         }
-        this.dataLeave = leaveFilterForThisUser
+        this.dataLeave = leaveFilterForThisUser;
         this.myName = res.user;
-      }
+      },
     });
   }
 
   checkLeave(item: any) {
-    this.namePreview = item.employee.name_th
+    this.namePreview = item.employee.name_th;
     const param = {
       approver_line_id: this.profile?.userId,
       // approver_line_id: 'U332330c41c5f38b127179127902d4ce4', // ลูกค้า สำหรับเทส
-      employee_id: item.employee_id
-    }
+      employee_id: item.employee_id,
+    };
 
     this.leaveService.getEmployerLeaveQuota(param).subscribe({
       next: (res: any) => {
         this.data = res.quotas;
-      }
-    })
+      },
+    });
   }
 
   cilckApprove(item: any) {
-
     const param = {
       line_id: this.profile?.userId,
       // line_id: 'U415bef6926c6126ae6b7370e46714288',
@@ -153,8 +163,8 @@ export class ApproveStatusComponent implements OnInit {
       // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37', // แชมป์
       // line_id: 'U332330c41c5f38b127179127902d4ce4', // ลูกค้า สำหรับเทส
       leave_id: item.id,
-      result: 'APPROVED'
-    }
+      result: 'APPROVED',
+    };
 
     this.leaveService.approveLeave(param).subscribe({
       next: (res: any) => {
@@ -162,42 +172,42 @@ export class ApproveStatusComponent implements OnInit {
           position: 'center',
           icon: 'success',
           title: 'สำเร็จ !',
-          text: "อนุมัติการลา",
+          text: 'อนุมัติการลา',
           showConfirmButton: false,
-          timer: 1500
-        })
+          timer: 1500,
+        });
         setTimeout(() => {
           this.getInitLeaveData();
           this.requestLeaveStatus();
         }, 1500);
-      }, error: (err) => {
+      },
+      error: (err) => {
         // console.log(err);
         if (err.error.error) {
           Swal.fire({
             position: 'center',
             // icon: 'error',
-            imageUrl: 'https://chatbot.newdice.co/VegetableOil/staticfiles/resources/img/hourglass.png',
+            imageUrl:
+              'https://chatbot.newdice.co/VegetableOil/staticfiles/resources/img/hourglass.png',
             title: 'รออนุมัติจากผู้บังคับบัญชาลำดับก่อนหน้า!',
             text: err.error.error,
             showConfirmButton: true,
             confirmButtonText: 'ตกลง',
-            confirmButtonColor: '#00833F'
-          })
+            confirmButtonColor: '#00833F',
+          });
         } else {
           Swal.fire({
             position: 'center',
             icon: 'error',
             title: 'เกิดข้อผิดพลาด !',
-            text: "ไม่สามารถอนุมัติการลาได้ กรุณาติดต่อแอดมิน",
+            text: 'ไม่สามารถอนุมัติการลาได้ กรุณาติดต่อแอดมิน',
             showConfirmButton: true,
             confirmButtonText: 'ตกลง',
-            confirmButtonColor: '#00833F'
-          })
+            confirmButtonColor: '#00833F',
+          });
         }
-
-      }
-    })
-
+      },
+    });
   }
 
   sentData(item: any) {
@@ -206,7 +216,6 @@ export class ApproveStatusComponent implements OnInit {
   }
 
   cilckNotApprove() {
-
     if (this.note) {
       const param = {
         line_id: this.profile?.userId,
@@ -216,8 +225,8 @@ export class ApproveStatusComponent implements OnInit {
         // line_id: 'U332330c41c5f38b127179127902d4ce4', // ลูกค้า สำหรับเทส
         leave_id: this.param.id,
         result: 'REJECTED',
-        note: this.note
-      }
+        note: this.note,
+      };
 
       this.leaveService.approveLeave(param).subscribe({
         next: (res: any) => {
@@ -225,56 +234,54 @@ export class ApproveStatusComponent implements OnInit {
             position: 'center',
             icon: 'success',
             title: 'สำเร็จ !',
-            text: "ไม่อนุมัติการลา",
+            text: 'ไม่อนุมัติการลา',
             showConfirmButton: false,
-            timer: 1500
-          })
+            timer: 1500,
+          });
           setTimeout(() => {
             this.getInitLeaveData();
             this.requestLeaveStatus();
           }, 1500);
-        }, error: (err) => {
+        },
+        error: (err) => {
           Swal.fire({
             position: 'center',
             icon: 'error',
             title: 'เกิดข้อผิดพลาด !',
-            text: "ไม่สามารถ ไม่อนุมัติการลาได้ กรุณาติดต่อแอดมิน",
+            text: 'ไม่สามารถ ไม่อนุมัติการลาได้ กรุณาติดต่อแอดมิน',
             showConfirmButton: true,
             confirmButtonText: 'ตกลง',
-            confirmButtonColor: '#00833F'
-          })
-        }
-      })
+            confirmButtonColor: '#00833F',
+          });
+        },
+      });
     } else {
       Swal.fire({
         position: 'center',
         icon: 'error',
         title: 'เกิดข้อผิดพลาด !',
-        text: "ไม่สามารถ ไม่อนุมัติการลาได้ กรุณาใส่เหตุผลการไม่อนุมัติ",
+        text: 'ไม่สามารถ ไม่อนุมัติการลาได้ กรุณาใส่เหตุผลการไม่อนุมัติ',
         showConfirmButton: true,
         confirmButtonText: 'ตกลง',
-        confirmButtonColor: '#00833F'
-      })
+        confirmButtonColor: '#00833F',
+      });
     }
   }
 
   getDataUser(item: any) {
-    this.statusPreview = item
+    this.statusPreview = item;
     this.datePreview = moment(item.end_time).diff(item.start_time, 'days');
   }
 
   getUserName(item: any) {
-    this.namePreview = item.user.name_th
+    this.namePreview = item.user.name_th;
   }
 
   getDate(item: any) {
-    let date
-    date = item.matchQuota - item.matchUse
-    return date % 1 == 0 ? date + ' วัน' : Math.floor(date) + ' วันครึ่ง'
+    let date;
+    date = item.matchQuota - item.matchUse;
+    return date % 1 == 0 ? date + ' วัน' : Math.floor(date) + ' วันครึ่ง';
   }
 
-  openPicker() {
-
-  }
-
+  openPicker() {}
 }

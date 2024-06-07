@@ -19,6 +19,7 @@ export class LeaveStatusComponent implements OnInit {
   datePreview: any;
   myName: any;
   date: any;
+  appUrl: string = '';
 
   os: ReturnType<typeof liff.getOS>;
   profile!: UnPromise<ReturnType<typeof liff.getProfile>>;
@@ -42,6 +43,7 @@ export class LeaveStatusComponent implements OnInit {
       this.profile = this.liffService.getProfile();
       await this.getInitLeaveData();
       await this.requestLeaveStatus();
+      this.appUrl = environment.path;
     } catch (error) {
       console.error(error);
     }

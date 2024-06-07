@@ -169,8 +169,7 @@
         <div class="row mb-4">
           <div class="col text-center">
             <img *ngIf="statusPreview?.leave?.file" class="img-user-file"
-              src="{{'https://chatbot.newdice.co/VegetableOil/staticfiles/attachments/' + statusPreview?.leave?.file}}"
-              alt="">
+              src="{{ appUrl + 'staticfiles/attachments/' + statusPreview?.leave?.file}}" alt="">
             <label class="small-text">{{statusPreview?.leave?.file ? statusPreview?.leave?.file :
               'ไม่ได้แนบไฟล์'}}</label>
           </div>
