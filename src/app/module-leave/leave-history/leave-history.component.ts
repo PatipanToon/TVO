@@ -19,7 +19,7 @@ export class LeaveHistoryComponent implements OnInit {
   datePreview: any;
   myName: any;
   date: any;
-
+  appUrl: string = '';
   os: ReturnType<typeof liff.getOS>;
   profile!: UnPromise<ReturnType<typeof liff.getProfile>>;
   dataLeave: any = [];
@@ -40,6 +40,7 @@ export class LeaveHistoryComponent implements OnInit {
     try {
       await this.liffService.initLiff();
       this.profile = this.liffService.getProfile();
+      this.appUrl = environment.path;
       await this.getInitLeaveData();
       await this.requestLeaveStatus();
     } catch (error) {
